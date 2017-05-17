@@ -24,7 +24,26 @@ The experiment included in this repository employs a dual-task design to examine
 
 Our implementation of the dual-task design here draws many features from a 2004 study conducted by [Leila Reddy and colleagues](http://jov.arvojournals.org/article.aspx?articleid=2121636). Clone or download the repository to examine how it works. 
 
+## Methods:
+Included below is a figure that outlines different features of our dual-task design. [**SOA**](https://en.wikipedia.org/wiki/Stimulus_onset_asynchrony) is **Stimulus Onset Asynchrony**: the time between the start of one item and the start of the next. 
+
+![alt_text][methods]
+
+#### a) Peripheral stimuli and scrambled masks used in `runExp1.m`
+Approximately 60 male and female faces in greyscale.
+
+#### b) Peripheral stimuli and [Mondrian](http://www.piet-mondrian.org/paintings.jsp) masks used in `runExp2.m`
+Red/green and green/red bisected disks.
+
+#### c) Task procedure 
+Experiment One is used as an example here. Single-task blocks involve responding to either the central or peripheral stimulus alone. Dual-task blocks require that subjects respond to both stimuli, starting with the central task. Subjects use one mouse click to record both their decision and confidence.
+
+#### d) Task and report relevance
+Note the **partial-report** dual-task requires that subjects make only one response per trial but to either the central or peripheral task. There is a 50% chance of either.
+
 ![alt_text][avatar]
+
+[methods]: ../master/methods-figure-Dual-Task.png "Dual-Task methods for Matthews et al. (in prep)"
 
 [logo]: https://raw.githubusercontent.com/julian-matthews/MoNoC-practice-experiment/master/MoNoC_minimal.png "Monash Neuroscience of Consciousness"
 
