@@ -215,7 +215,7 @@ for tr = 1 : nTrials
     
     %Set coordinates for circle to present images around in the main screen
     A = rand(2); %#ok<*NASGU>
-    radius = 1.2 * Cfg.pixelsPerDegree;
+    radius = 1.5 * Cfg.pixelsPerDegree;
     anglesMain = linspace(0,2*pi,TR(tr).noLetters+1);
     anglesMain = anglesMain(1:4);
     ptsMain =[cos(anglesMain);sin(anglesMain)];
