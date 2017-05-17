@@ -264,18 +264,13 @@ for f = 1:nFrames
         %%%%%%%%% Draw Ts and Ls (DEP ON targetTrialType SPECIFIED ABOVE) %%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
-        %% 2016-05-03 - TEXTURE THAT OVERWRITES xTexture ON 'DIFFERENT' TRIALS 
-        %% ASSUMES ITS ROTATION ANGLE FROM reWriteLetterPos-1 
-        %% MASK MATCHES ROTATION ANGLE OF INITIAL "OVERWRITTEN" TEXTURE
-        %% MAY NEED FIXING IF CONTINUING
-        
         Screen('DrawTextures', Cfg.windowPtr, TR(tr).xTexture, [], [TR(tr).centreLetterRect; TR(tr).rectsMain]', TR(tr).ang(1:5));
 
         %Sets the rewriting of one of the letters (either T or L) to the opposite)
         if TR(tr).targetTrialType == 2
-            Screen('DrawTexture', Cfg.windowPtr, TR(tr).T_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos));
+            Screen('DrawTexture', Cfg.windowPtr, TR(tr).T_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos+1));
         elseif TR(tr).targetTrialType == 3
-            Screen('DrawTexture', Cfg.windowPtr, TR(tr).L_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos));
+            Screen('DrawTexture', Cfg.windowPtr, TR(tr).L_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos+1));
         end
         
     end
