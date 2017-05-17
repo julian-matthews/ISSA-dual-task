@@ -8,10 +8,10 @@
 
 nTrials = 30;
 
-Gral.subjNo = input('Subject_No: ','s');  %enter a subject number
-Gral.subjID = input('Subject_ID: ','s');  %enter subject initials
-Gral.session = input('Session: ','s');  %enter number of session
-Gral.run = input('Run: ', 's');
+Gral.subjNo = input('Enter subject number, 01-99:\n','s');  %enter a subject number
+Gral.subjID = input('Enter subject initials:\n','s');  %enter subject initials
+Gral.session = input('Session number, 1 to 3:\n','s');  %enter number of session
+Gral.run = input('Run number, 1-3:\n','s');
 Gral.exptotalDuration = [];
 Cfg.aux_buffer = 1;
 Gral.EXP = 'EXP2';
@@ -19,7 +19,7 @@ Gral.EXP = 'EXP2';
 if ~exist(['../data/raw/Exp2/' Gral.subjNo '_' Gral.subjID],'dir');
     mkdir('../data/raw/Exp2/', [Gral.subjNo '_' Gral.subjID]);
 end
-    
+
 
 %%%% Reset random number generator by the clock time %%%%%
 t = clock;
@@ -31,7 +31,7 @@ rng(t(3) * t(4) * t(5),'twister')
 
 % This relates to the way Windows handles multiple screens (it defines a
 % 'primary display' independent of traditional numbering) and numbers
-% screens in the reverse order to Linux/Mac. 
+% screens in the reverse order to Linux/Mac.
 
 % The 'isunix' function should account for the reverse numbering but if
 % you're using a second monitor you will need to define a 'primary display'
@@ -50,7 +50,7 @@ end
 
 % Window size (blank is full screen)
 % Cfg.WinSize = [];
-Cfg.WinSize = [10 10 850 750];
+Cfg.WinSize = [10 10 1050 950];
 
 [Cfg.windowPtr, rect] = Screen('OpenWindow', Cfg.screenNumber,0,Cfg.WinSize);
 
@@ -90,7 +90,7 @@ Cfg.smallrect=[0 0 Cfg.cs/1.5 Cfg.rs/4];
 Cfg.bigrect=[0 0 2.25*Cfg.cs 2*Cfg.rs];
 Cfg.cleavage=[0 0 Cfg.cs/4 2*Cfg.rs];
 
-Cfg.yoff = 0; 
+Cfg.yoff = 0;
 
 Cfg.screensize_r = rect(4);
 Cfg.screensize_c = rect(3);
@@ -112,7 +112,7 @@ Cfg.color.black= [0 0 0];
 Cfg.color.inc=(Cfg.color.white+Cfg.color.black).*0.5;
 Cfg.fixColor = [0 0 0];
 
-%% SET UP PARAMETERS FOR FIXATION CROSS 
+%% SET UP PARAMETERS FOR FIXATION CROSS
 
 %Set colour, width, length etc.
 Cfg.crossColour = 255;  %255 = white
@@ -165,11 +165,11 @@ PR = Shuffle(PR);
 
 
 for tr = 1 : nTrials
-
-% Define TargetTrialTypes for each trial (control for the number of trials
-% in the different conditions) and set textures
+    
+    % Define TargetTrialTypes for each trial (control for the number of trials
+    % in the different conditions) and set textures
     if tr <= crit
-        TR(tr).targetTrialType = 0;
+        TR(tr).targetTrialType = 0; %#ok<*SAGROW>
         TR(tr).xTexture = L_texture;
     elseif tr >= crit+1 && tr <= 2*crit
         TR(tr).targetTrialType = 1;
@@ -186,7 +186,7 @@ for tr = 1 : nTrials
     % Random selection of rotation angle
     TR(tr).ang = randperm(360);
     
-
+    
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%  MAIN SETUP   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,7 +195,7 @@ for tr = 1 : nTrials
     %BASIC SET UP OF THE EXPERIMENT
     TR(tr).nTrials = nTrials; %total number of trials
     
-
+    
     % Initial values for SOAs
     TR(tr).cSOA = []; % rounded! In frames! 60hz... therefore, 30 = 500ms
     TR(tr).pSOA = []; % rounded! In frames! 60hz... therefore, 30 = 500ms
@@ -303,11 +303,11 @@ for tr = 1 : nTrials
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%  PARTIAL REPORT  %%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    % set which response screen is presented 
+    % set which response screen is presented
     TR(tr).cond_PR = PR(tr);
-        
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%  OUTPUT/SAVE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -316,14 +316,14 @@ for tr = 1 : nTrials
     TR(tr).c_confidence = [];
     TR(tr).mouseResponsesPer = [];
     TR(tr).p_confidence = [];
-
-   
+    
+    
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%  QUEST  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    % Set parameters for QUEST 
+    % Set parameters for QUEST
     cSOAGuess=30;
     cSOAGuessSd=20;
     pThreshold=0.7;
@@ -335,9 +335,9 @@ for tr = 1 : nTrials
     pSOAGuessSd=8;
     p=QuestCreate(pSOAGuess,pSOAGuessSd,pThreshold,beta,delta,gamma,1,20);
     p.normalizePdf=1;
-
-
+    
+    
     
 end
-    %randomize trials
-    TR = Shuffle(TR);
+%randomize trials
+TR = Shuffle(TR);

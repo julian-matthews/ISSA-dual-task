@@ -15,6 +15,7 @@ Here we provide MATLAB code for building psychophysics experiments that employs 
 ## You will need: 
 1. **MATLAB**
 2. [**Psychtoolbox**](http://psychtoolbox.org/)
+3. [Monitor set to 60Hz]: "This experiment has been coded to present items at specific frames. Stimuli will appear much too quickly at higher framerate settings"
 
 ## Description:
 The experiment included in this repository employs a dual-task design to examine the relationship between [attention and consciousness](https://www.researchgate.net/profile/Naotsugu_Tsuchiya/publication/309702790_Relationship_between_selective_visual_attention_and_visual_consciousness/links/58638e3f08aebf17d3973831.pdf). Our implementation of the dual-task design here draws many features from a 2004 study conducted by [Leila Reddy and colleagues](http://jov.arvojournals.org/article.aspx?articleid=2121636). Clone or download the repository to examine how it works. 

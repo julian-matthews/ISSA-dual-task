@@ -11,7 +11,6 @@ function runExp1(noCST, noPST, noDT, RANDOMIZE)
 % noDT: Number of blocks in dual task condition
 % RANDOMIZE: Boolean, randomize blocks YES/NO
 
-
 dbstop if error
 
 %% No of trials
@@ -544,9 +543,9 @@ if cond == 1
     
     instr1 = 'Please focus on the centre of the screen and decide whether the letters first presented to you are the same or different.';
     
-    DrawFormattedText(Cfg.windowPtr, 'Central Task', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr1, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Central Task', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr1, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed
@@ -566,9 +565,9 @@ elseif cond == 2
     
     instr2 = 'Please focus on the centre of the screen and decide whether the face first presented to you in the periphery is male or female.';
     
-    DrawFormattedText(Cfg.windowPtr, 'Peripheral Task', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr2, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Peripheral Task', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr2, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed
@@ -588,9 +587,9 @@ elseif cond == 3
     
     instr3 = 'Please focus on the centre of the screen and decide whether the letters first presented to you in the centre are the same or different as well as whether the face first presented to you in the periphery is male or female.';
 
-    DrawFormattedText(Cfg.windowPtr, 'Dual Task', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Dual Task', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed

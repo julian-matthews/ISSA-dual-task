@@ -572,9 +572,9 @@ elseif cond == 2
     
     instr2 = 'Please focus on the centre of the screen and decide whether the disk first presented to you in the periphery is red/green or green/red.';
     
-    DrawFormattedText(Cfg.windowPtr, 'Peripheral Task', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr2, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Peripheral Task', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr2, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed
@@ -594,9 +594,9 @@ elseif cond == 3
     
     instr3 = 'Please focus on the centre of the screen and decide whether the letters first presented to you in the centre are the same or different as well as whether the disk first presented to you in the periphery is red/green or green/red. After each trial you will be asked to respond both to the letter and the disk task.';
 
-    DrawFormattedText(Cfg.windowPtr, 'Dual Task', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Dual Task', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed
@@ -615,9 +615,9 @@ elseif cond == 4
     
     instr3 = 'Please focus on the centre of the screen and decide whether the letters first presented to you in the centre are the same or different as well as whether the disk first presented to you in the periphery is red/green or green/red. After each trial you will be asked to respond either to the letter task or the disk task.';
 
-    DrawFormattedText(Cfg.windowPtr, 'Dual Task with Partial Report', 'center', 400, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 140, [], [], 2);
-    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 1000);
+    DrawFormattedText(Cfg.windowPtr, 'Dual Task with Partial Report', 'center', 400, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 80, [], [], 2);
+    DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
     Screen('Flip', Cfg.windowPtr, [], []);
     WaitSecs(.3);
     % wait for click to proceed
