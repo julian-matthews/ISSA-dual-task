@@ -26,7 +26,34 @@ t = clock;
 rng(t(3) * t(4) * t(5),'twister')
 
 %% Initialise screen
-[Cfg.windowPtr, rect] = Screen('OpenWindow', 0, 0);%, [500 500 1500 1500]);
+% Screen setup using Psychtoolbox is notoriously clunky in Windows,
+% particularly for dual-monitors.
+
+% This relates to the way Windows handles multiple screens (it defines a
+% 'primary display' independent of traditional numbering) and numbers
+% screens in the reverse order to Linux/Mac. 
+
+% The 'isunix' function should account for the reverse numbering but if
+% you're using a second monitor you will need to define a 'primary display'
+% using the Display app in your Windows Control Panel. See the psychtoolbox
+% system reqs for more info: http://psychtoolbox.org/requirements/#windows
+
+Cfg.screens = Screen('Screens');
+
+if isunix
+    Cfg.screenNumber = min(Cfg.screens); % Attached monitor
+    % Cfg.screenNumber = max(Cfg.screens); % Main display
+else
+    Cfg.screenNumber = max(Cfg.screens); % Attached monitor
+    % Cfg.screenNumber = min(Cfg.screens); % Main display
+end
+
+% Window size (blank is full screen)
+% Cfg.WinSize = [];
+Cfg.WinSize = [10 10 850 750];
+
+[Cfg.windowPtr, rect] = Screen('OpenWindow', Cfg.screenNumber,0,Cfg.WinSize);
+
 Cfg.Date= datestr(now);
 Cfg.ExperimentStart = GetSecs; %store time when experiment was started
 Cfg.computer = Screen('Computer');
