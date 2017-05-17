@@ -1,5 +1,4 @@
 function runExp1(noCST, noPST, noDT, RANDOMIZE)
-
 %% DUAL ATTENTIONAL (VISUAL DISCRIMINATION) TASK %%
 % Central Task = Display of letters in circle (4 Conditions: All L's, All T's, 4 L's
 % and 1 T or 4 T's and 1 L) before a mask (T = Central SOA, cSOA) of all F's
@@ -10,6 +9,8 @@ function runExp1(noCST, noPST, noDT, RANDOMIZE)
 % noPST: Number of blocks in peripheral single task condition
 % noDT: Number of blocks in dual task condition
 % RANDOMIZE: Boolean, randomize blocks YES/NO
+%
+% NB. This experiment is designed for 60Hz presentation!
 
 dbstop if error
 
@@ -32,13 +33,13 @@ tic
 %%%%%%%%%%%%%%%%%%%%%% LOAD PREVIOUS QUESTs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-path = ['../data/raw/Exp1/' Gral.subjNo '_' Gral.subjID '/' Gral.subjNo '_' Gral.subjID '_'];
-prevSession = num2str(str2num(Gral.session)-1);
+path = ['../data/raw/Exp1/' Gral.subjNo '_' Gral.subjID '/' Gral.subjNo '_' Gral.subjID '_']; %#ok<*NODEF>
+prevSession = num2str(str2num(Gral.session)-1); %#ok<*ST2NM>
 prevRun = num2str(str2num(Gral.run)-1);
 
 if str2num(Gral.session) > 1 && str2num(Gral.run) == 1
     clear q p;
-    if exist([path prevSession '_4.mat'],'file') 
+    if exist([path prevSession '_4.mat'],'file')
         load([path prevSession '_4.mat'], 'q', 'p');
     else
         load([path prevSession '_3.mat'], 'q', 'p');
@@ -116,33 +117,33 @@ for b = 1:nBlocks
     TR = TR(randi);
     
     for tr = 1:nTrials
+        
+        % retrieve QUEST estimates
+        TR(tr).cSOA = round(QuestMean(q));
+        TR(tr).true_cSOA = QuestMean(q);
+        TR(tr).pSOA = round(QuestMean(p));
+        TR(tr).true_pSOA = QuestMean(p);
+        
+        % Run Trials
+        TR = show_trial(TR, Cfg, tr, cond);
+        
+        % Update Quests
+        if UseQUEST
             
-            % retrieve QUEST estimates
-            TR(tr).cSOA = round(QuestMean(q));	
-            TR(tr).true_cSOA = QuestMean(q);
-            TR(tr).pSOA = round(QuestMean(p));
-            TR(tr).true_pSOA = QuestMean(p);
-                        
-            % Run Trials
-            TR = show_trial(TR, Cfg, tr, cond);
-            
-            % Update Quests
-            if UseQUEST
-                
-                if cond == 1   
-                    q=QuestUpdate(q,TR(tr).cSOA,TR(tr).c_response);
-                elseif cond == 2
-                    p=QuestUpdate(p,TR(tr).pSOA,TR(tr).p_response);
-                end
-                
+            if cond == 1
+                q=QuestUpdate(q,TR(tr).cSOA,TR(tr).c_response);
+            elseif cond == 2
+                p=QuestUpdate(p,TR(tr).pSOA,TR(tr).p_response);
             end
             
-
+        end
+        
+        
     end
-
+    
     
     % Store current block and condition in data
-    Data(b).TR = TR;
+    Data(b).TR = TR; %#ok<*AGROW>
     Data(b).condition = cond;
     Data(b).estim_cSOA = [];
     Data(b).estim_pSOA = [];
@@ -164,7 +165,7 @@ for b = 1:nBlocks
             Data(b).estim_pSOA = QuestMean(p);
     end
     
-
+    
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -252,7 +253,7 @@ fmask_start = TR(tr).pSOA + 2;
 fmask_dur = nFrames - (TR(tr).pSOA + 1);
 
 
-% Start looping through frames 
+% Start looping through frames
 for f = 1:nFrames
     
     % Clear screen
@@ -265,12 +266,12 @@ for f = 1:nFrames
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         Screen('DrawTextures', Cfg.windowPtr, TR(tr).xTexture, [], [TR(tr).centreLetterRect; TR(tr).rectsMain]', TR(tr).ang(1:5));
-
+        
         %Sets the rewriting of one of the letters (either T or L) to the opposite)
         if TR(tr).targetTrialType == 2
-            Screen('DrawTexture', Cfg.windowPtr, TR(tr).T_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos+1));
+            Screen('DrawTexture', Cfg.windowPtr, TR(tr).T_texture, [], TR(tr).rectsMain(TR(tr).reWriteLetterPos,:), TR(tr).ang(TR(tr).reWriteLetterPos+1));
         elseif TR(tr).targetTrialType == 3
-            Screen('DrawTexture', Cfg.windowPtr, TR(tr).L_texture, [], [TR(tr).rectsMain(TR(tr).reWriteLetterPos,:)], TR(tr).ang(TR(tr).reWriteLetterPos+1));
+            Screen('DrawTexture', Cfg.windowPtr, TR(tr).L_texture, [], TR(tr).rectsMain(TR(tr).reWriteLetterPos,:), TR(tr).ang(TR(tr).reWriteLetterPos+1));
         end
         
     end
@@ -280,29 +281,29 @@ for f = 1:nFrames
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%% INSERT PERIPHERAL FACE PRESENTATION%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        
         %Set up image for peripheral Task (face displayed in periphery)
         fileName = ['faces/' num2str(TR(tr).gender) num2str(TR(tr).picNo), '.jpg'];
         dataStruct = imread(fileName);
         faceData = Screen('MakeTexture', Cfg.windowPtr, dataStruct);
-
+        
         % Show face
         Screen('DrawTexture', Cfg.windowPtr, faceData, [], [TR(tr).rectCirclePeriph]);
         
     end
     
     if f >= fmask_start && f < (fmask_start + fmask_dur)
-     
+        
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%% PERIPHERAL FACE MASK PRESENTATION (scrambled face) %%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        
         % Peripheral Mask (scrambled face displayed in periphery)
-        % Set up mask for peripheral Task 
+        % Set up mask for peripheral Task
         fileName = ['faces/' num2str(TR(tr).gender_mask) num2str(TR(tr).picNo2_mask), '.jpg'];
         dataStruct = imread(fileName);
         faceData = Screen('MakeTexture', Cfg.windowPtr, dataStruct);
-
+        
         Screen('DrawTexture', Cfg.windowPtr, faceData, [], [TR(tr).rectCirclePeriph]);%,angles(r_indxs(1)));
         
     end
@@ -312,17 +313,17 @@ for f = 1:nFrames
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%% DRAW LETTER MASKS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-       
+        
         %Set mask text images at same angles
-      
+        
         Screen('DrawTextures', Cfg.windowPtr, TR(tr).F_texture, [], [TR(tr).centreLetterRect; TR(tr).rectsMain]', TR(tr).ang(1:5));
         
     end
-
+    
     % Present stimuli on screen
     Screen('Flip', Cfg.windowPtr);
     
-
+    
 end
 
 
@@ -333,8 +334,8 @@ for m = 1 : TR(tr).screenInterval % In Frames! (eg 60hz = 15 = 250ms)
     Screen('Flip', Cfg.windowPtr, [], Cfg.aux_buffer);
 end
 
-    
-    
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% COLLECT RESPONSES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -343,7 +344,7 @@ end
 ShowCursor;
 
 if cond == 1 || cond == 3
-    responseType = 1;
+    
     DrawResponseScreen1;
     Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
     WaitSecs(.3);
@@ -354,9 +355,9 @@ if cond == 1 || cond == 3
     while clicks == 0
         
         [x, y] = getMouseResponse();
-           
+        
         % Check whether the click went inside a box area
-        for m = 1 : size(polyL, 1)           
+        for m = 1 : size(polyL, 1)
             idxs_left(m) = inpolygon(x,y,squeeze(polyL(m,1,:)),squeeze(polyL(m,2,:)));
             
             idxs_right(m) = inpolygon(x,y,squeeze(polyR(m,1,:)),squeeze(polyR(m,2,:)));
@@ -369,26 +370,26 @@ if cond == 1 || cond == 3
         if length(idx_pos_left) == 1
             keyid = 1;
             keyid2 = idx_pos_left;
-
+            
             clicks = 1;
             
             % Paint selected box blue
             Screen('FillPoly', Cfg.windowPtr, [0 0 255], squeeze(polyL(idx_pos_left,:,:))',1);
-            for wait = 1:10 
+            for wait = 1:10
                 Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
             end
-           
+            
         end
         
-        if length(idx_pos_right) == 1 
+        if length(idx_pos_right) == 1
             keyid = 2;
             keyid2 = idx_pos_right;
             
             clicks= 1;
-           
+            
             % Paint selected box blue
             Screen('FillPoly', Cfg.windowPtr, [0 0 255], squeeze(polyR(idx_pos_right,:,:))',1);
-            for wait = 1:10 
+            for wait = 1:10
                 Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
             end
             
@@ -397,11 +398,11 @@ if cond == 1 || cond == 3
     
     % Check response
     if keyid == 1
-        response = 'same'; 
+        response = 'same';
     elseif keyid == 2
         response = 'different';
     end
-
+    
     if TR(tr).targetTrialType < 2
         trialType = 'same';
     else
@@ -412,7 +413,7 @@ if cond == 1 || cond == 3
     TR(tr).c_response = strcmp(response, trialType);
     TR(tr).c_confidence = keyid2;
     
-
+    
     
     TR(tr).mouseResponsesMain = [x y];
 end
@@ -424,11 +425,11 @@ if cond == 3
 end
 
 if cond == 2 || cond == 3
-    responseType = 2;
+    
     DrawResponseScreen1;
     
     Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
-
+    
     
     clicks = 0; % flags for the responses: 2afc left, 2afc right, 5 conf left, 5 conf right
     
@@ -437,7 +438,7 @@ if cond == 2 || cond == 3
         [x, y] = getMouseResponse();
         
         % Check whether the click went inside a box area
-        for m = 1 : size(polyL, 1)           
+        for m = 1 : size(polyL, 1)
             idxs_left(m) = inpolygon(x,y,squeeze(polyL(m,1,:)),squeeze(polyL(m,2,:)));
             
             idxs_right(m) = inpolygon(x,y,squeeze(polyR(m,1,:)),squeeze(polyR(m,2,:)));
@@ -450,27 +451,27 @@ if cond == 2 || cond == 3
         if length(idx_pos_left) == 1 %~isempty(idx_pos_left)
             keyid = 1;
             keyid2 = idx_pos_left;
-
+            
             clicks = 1;
             
             % Paint selected box blue
             Screen('FillPoly', Cfg.windowPtr, [0 0 255], squeeze(polyL(idx_pos_left,:,:))',1);
-            for wait = 1:10 
+            for wait = 1:10
                 Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
             end
             
-           
+            
         end
         
-        if length(idx_pos_right) == 1 
+        if length(idx_pos_right) == 1
             keyid = 2;
             keyid2 = idx_pos_right;
             
             clicks= 1;
-           
+            
             % Paint selected box blue
             Screen('FillPoly', Cfg.windowPtr, [0 0 255], squeeze(polyR(idx_pos_right,:,:))',1);
-            for wait = 1:10 
+            for wait = 1:10
                 Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
             end
             
@@ -478,18 +479,18 @@ if cond == 2 || cond == 3
     end
     
     TR(tr).p_keyid = keyid;
-    TR(tr).p_confidence = keyid2;  
+    TR(tr).p_confidence = keyid2;
     TR(tr).mouseResponsesPer = [x y];
     
     % Check response
-
+    
     if keyid == 1
         resp = 'm';
     elseif keyid == 2
         resp = 'f';
     end
-
-    TR(tr).p_response = strcmp(resp, TR(tr).gender); 
+    
+    TR(tr).p_response = strcmp(resp, TR(tr).gender);
     
 end
 
@@ -508,23 +509,23 @@ end
 %% wait for click to proceed
 
 if tr ~= TR(tr).nTrials
-
+    
     Screen('TextSize',Cfg.windowPtr,20);
     DrawFormattedText(Cfg.windowPtr, '<<Click to proceed to the next trial>>','center', 'center');
     Screen('Flip', Cfg.windowPtr, [], []);
-
+    
     % Wait for mouse click
     [~,~,buttons] = GetMouse;
     while any(buttons) % if already down, wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while ~any(buttons) % wait for press
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while any(buttons) % wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
-
+    
 end
 
 end
@@ -546,16 +547,16 @@ if cond == 1
     % wait for click to proceed
     [~,~,buttons] = GetMouse;
     while any(buttons) % if already down, wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while ~any(buttons) % wait for press
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while any(buttons) % wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
-
-
+    
+    
 elseif cond == 2
     
     instr2 = 'Please focus on the centre of the screen and decide whether the face first presented to you in the periphery is male or female.';
@@ -568,20 +569,20 @@ elseif cond == 2
     % wait for click to proceed
     [~,~,buttons] = GetMouse;
     while any(buttons) % if already down, wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while ~any(buttons) % wait for press
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while any(buttons) % wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
-   
+    
     
 elseif cond == 3
     
     instr3 = 'Please focus on the centre of the screen and decide whether the letters first presented to you in the centre are the same or different as well as whether the face first presented to you in the periphery is male or female.';
-
+    
     DrawFormattedText(Cfg.windowPtr, 'Dual Task', 'center', 400, [255 255 255], 80, [], [], 2);
     DrawFormattedText(Cfg.windowPtr, instr3, 'center', 500, [255 255 255], 80, [], [], 2);
     DrawFormattedText(Cfg.windowPtr, '<<Click to begin with the first trial>>','center', 750);
@@ -590,13 +591,13 @@ elseif cond == 3
     % wait for click to proceed
     [~,~,buttons] = GetMouse;
     while any(buttons) % if already down, wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while ~any(buttons) % wait for press
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     while any(buttons) % wait for release
-    [~,~,buttons] = GetMouse;
+        [~,~,buttons] = GetMouse;
     end
     
     
