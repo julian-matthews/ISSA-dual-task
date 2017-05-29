@@ -195,7 +195,6 @@ KbWait;
 %% close all windows / devices opened
 ShowCursor;
 sca
-clear all
 
 end
 
@@ -344,6 +343,7 @@ end
 ShowCursor;
 
 if cond == 1 || cond == 3
+    responseType = 1; %#ok<*NASGU> % Need this for DrawResponseScreen script
     
     DrawResponseScreen1;
     Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
@@ -425,6 +425,7 @@ if cond == 3
 end
 
 if cond == 2 || cond == 3
+    responseType = 2; %#ok<*NASGU> % Need this for DrawResponseScreen script
     
     DrawResponseScreen1;
     

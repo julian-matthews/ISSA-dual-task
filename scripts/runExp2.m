@@ -355,6 +355,7 @@ ShowCursor;
 
 
 if cond == 1 || cond == 3 || (cond == 4 && TR(tr).cond_PR == 1)
+    responseType = 1; % Need this for DrawResponseScreen script 
     
     DrawResponseScreen2;
     Screen('Flip', Cfg.windowPtr,  [], Cfg.aux_buffer);
@@ -437,6 +438,7 @@ if cond == 3
 end
 
 if cond == 2 || cond == 3 || (cond == 4 && TR(tr).cond_PR == 2)
+    responseType = 2; %#ok<*NASGU> % Need this for DrawResponseScreen script
     
     DrawResponseScreen2;
     
