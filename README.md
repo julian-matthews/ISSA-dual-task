@@ -7,6 +7,8 @@
 3. Katsunori Miyahara (Rikkyo University)
 4. Elizaveta Solomonova (University of Montreal)
 
+### [The paper that implements this code is currently under review, please read our preprint here](https://psyarxiv.com/ef45x/)
+
 ## Outline
 The aim of this hands-on project is to introduce two exemplar visual psychophysics paradigms. By experiencing what psychophysics tasks are like, students will be able to design their own experiment. Also, students will learn some basic analysis concepts: objective performance and [metacognitive sensitivity](http://journal.frontiersin.org/article/10.3389/fnhum.2014.00443/full), each based on [signal detection theory](http://psycnet.apa.org/psycinfo/2004-19022-000). A broader aim is to consider what these behavioural techniques might tell us about consciousness and related processes (such as attention, memory and metacognition). 
 
