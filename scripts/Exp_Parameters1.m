@@ -69,6 +69,8 @@ Cfg.yDimCm=y/10;
 Cfg.distanceCm = 60;    % measured for individual set up!
 
 %DEG VISUAL ANGLE FOR SCREEN
+% 2018-03-27 Confirmed that this operation is correct, has unintuitive order of operations that simultanously convert 
+% to radians & degrees. Consider 'atand' function for future versions.
 Cfg.visualAngleDegX = atan(Cfg.xDimCm/(2*Cfg.distanceCm))/pi*180*2;
 Cfg.visualAngleDegY = atan(Cfg.yDimCm/(2*Cfg.distanceCm))/pi*180*2;
 
