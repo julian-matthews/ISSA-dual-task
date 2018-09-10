@@ -1,18 +1,12 @@
 ![alt text][logo]
-# Dual-Task
-**ISSA2017 Psychophysics Hands-on Project**
-## Coordinators
-1. Nao Tsuchiya (Monash University)
-2. Julian Matthews (Monash University)
-3. Katsunori Miyahara (Rikkyo University)
-4. Elizaveta Solomonova (University of Montreal)
+# Extended dual-task paradigm
 
-### [The paper that implements this code has been accepted for publication in Philosophical Transactions B. In the meantime, please read our preprint here](https://psyarxiv.com/ef45x/)
+> Whether conscious perception requires attention remains a topic of intense debate. While certain complex stimuli such as faces and animals can be discriminated outside the focus of spatial attention, many simpler stimuli cannot. Because such evidence was obtained in *dual-task paradigms* involving no measure of subjective insight, it remains unclear whether accurate discrimination of unattended complex stimuli is the product of automatic, unconscious processing, as in blindsight, or is accessible to consciousness. Furthermore, these paradigms typically require extensive training over many hours, bringing into question whether this phenomenon can be achieved in naive subjects. We developed a novel dual-task paradigm incorporating confidence ratings to calculate metacognition and adaptive staircase procedures to reduce training. With minimal training, subjects were able to discriminate face-gender in the near absence of top–down attentional amplification, while also displaying above-chance metacognitive accuracy. By contrast, the discrimination of simple coloured discs was significantly impaired and metacognitive accuracy dropped to chance-level, even in a partial-report condition. In a final experiment, we used blended face/disc stimuli and confirmed that face-gender but not colour orientation can be discriminated in the dual task. Our results show direct evidence for metacognitive conscious access in the near absence of attention for complex, but not simple, stimuli.
 
-## Outline
-The aim of this hands-on project is to introduce two exemplar visual psychophysics paradigms. By experiencing what psychophysics tasks are like, students will be able to design their own experiment. Also, students will learn some basic analysis concepts: objective performance and [metacognitive sensitivity](http://journal.frontiersin.org/article/10.3389/fnhum.2014.00443/full), each based on [signal detection theory](http://psycnet.apa.org/psycinfo/2004-19022-000). A broader aim is to consider what these behavioural techniques might tell us about consciousness and related processes (such as attention, memory and metacognition). 
+### [The paper that implements this code has been accepted for publication in Philosophical Transactions B. It is available here](http://rstb.royalsocietypublishing.org/content/373/1755/20170352)
 
-Here we provide MATLAB code for building psychophysics experiments that employ a [**Dual-Task** design](https://en.wikipedia.org/wiki/Dual-task_paradigm). Students are encouraged to modify this code to examine their own research questions in collaboration with the coordinators.
+## What is this?
+Here we provide MATLAB code for building psychophysics experiments that employ a [**Dual-Task** design](https://en.wikipedia.org/wiki/Dual-task_paradigm). 
 
 ## You will need: 
 1. **MATLAB**
