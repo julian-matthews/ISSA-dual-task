@@ -1,6 +1,10 @@
 ![alt text][logo]
 # Extended dual-task paradigm
 
+###### Julian Matthews, Pia Schröder, Lisandro Kaunitz, Jeroen van Boxtel, Naotsugu Tsuchiya
+
+***
+
 [**The paper that implements this code has been accepted for publication in Philosophical Transactions B. It is available here.**](http://rstb.royalsocietypublishing.org/content/373/1755/20170352)
 
 > Whether conscious perception requires attention remains a topic of intense debate. While certain complex stimuli such as faces and animals can be discriminated outside the focus of spatial attention, many simpler stimuli cannot. Because such evidence was obtained in *dual-task paradigms* involving no measure of subjective insight, it remains unclear whether accurate discrimination of unattended complex stimuli is the product of automatic, unconscious processing, as in blindsight, or is accessible to consciousness. Furthermore, these paradigms typically require extensive training over many hours, bringing into question whether this phenomenon can be achieved in naive subjects. We developed a novel dual-task paradigm incorporating confidence ratings to calculate metacognition and adaptive staircase procedures to reduce training. With minimal training, subjects were able to discriminate face-gender in the near absence of top–down attentional amplification, while also displaying above-chance metacognitive accuracy. By contrast, the discrimination of simple coloured discs was significantly impaired and metacognitive accuracy dropped to chance-level, even in a partial-report condition. In a final experiment, we used blended face/disc stimuli and confirmed that face-gender but not colour orientation can be discriminated in the dual task. Our results show direct evidence for metacognitive conscious access in the near absence of attention for complex, but not simple, stimuli.
